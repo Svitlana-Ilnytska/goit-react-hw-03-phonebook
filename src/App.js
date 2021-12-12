@@ -22,6 +22,26 @@ export default class App extends Component {
     filter: "",
   };
 
+  componentDidMount() {
+    const persistedContacts = localStorage.getItem("contacts");
+
+    if (persistedContacts) {
+      try {
+        const contacts = JSON.parse(persistedContacts);
+
+        this.setState({ contacts });
+      } catch {
+        console.log("Error, please try again :(");
+      }
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
+
   nameInputId = nanoid();
 
   addContact = (contactName) => {
@@ -37,8 +57,8 @@ export default class App extends Component {
     if (theSameContact)
       return alert(`${contactName.name}  is already in contacts.`);
     else
-      this.setState((state) => ({
-        contacts: [...state.contacts, contactToAdd],
+      this.setState(({contacts}) => ({
+        contacts: [...contacts, contactToAdd],
       }));
   };
 
