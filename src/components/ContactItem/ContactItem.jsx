@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import css from './ContactItem.module.css';
+import css from "./ContactItem.module.css";
 
 const ContactItem = ({ name, number, onDeleteContact }) => (
   <>
     <p>
-      {name}: {number}
+      <span>{name}:</span> <a href={`tel:${number}`}> {number}</a>
     </p>
 
     <button type="button" onClick={onDeleteContact} className={css.button}>
