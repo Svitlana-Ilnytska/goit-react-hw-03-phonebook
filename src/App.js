@@ -42,22 +42,19 @@ export default class App extends Component {
     }
   }
 
-  nameInputId = nanoid();
-
   addContact = (contactName) => {
     const contactToAdd = {
       ...contactName,
       id: nanoid(),
     };
-
-    const theSameContact = this.state.contacts.find(
-      (contact) => contact.name === contactName.name
+    const theSameContact = this.state.contacts.some(
+      (contact) => contact.name.toLowerCase() === contactName.name.toLowerCase()
     );
 
     if (theSameContact)
       return alert(`${contactName.name}  is already in contacts.`);
     else
-      this.setState(({contacts}) => ({
+      this.setState(({ contacts }) => ({
         contacts: [...contacts, contactToAdd],
       }));
   };
